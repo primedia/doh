@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+require 'thor'
+
+module Doh
+
+  class CLI < Thor
+    include Thor::Actions
+
+    desc "new APPLICATION_NAME", "Sets up a new doh application to be abused as needed."
+    def new(name)
+      @name = Thor::Util.snake_case(name)
+      directory :app, @name
+    end
+
+    desc "start", "Starts the doh application. Valid rackup args may be used."
+    def start(*args)
+      port_option = args.include?('-p') ? '' : ' -p 9999'
+      args = args.join(" ")
+      command = "bundle exec rackup config.ru #{port_option} #{args}"
+      system(command)
+    end
+    map "s" => :start
+
+  end
+end
+
+Doh::CLI.start
