@@ -1,2 +1,2 @@
-require './app'
+require './doh'
 run Sinatra::Application
