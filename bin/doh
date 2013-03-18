@@ -7,6 +7,10 @@ module Doh
   class CLI < Thor
     include Thor::Actions
 
+    def self.source_root
+      File.expand_path('../../templates', __FILE__)
+    end
+
     desc "new APPLICATION_NAME", "Sets up a new doh application to be abused as needed."
     def new(name)
       @name = Thor::Util.snake_case(name)
